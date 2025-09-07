@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudio de Prueba Virtual</title>
+    <link rel="stylesheet" href="index.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.sh/@google/genai@1.0.0"
+        }
+      }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Estudio de Prueba Virtual</h1>
+        <button id="start-over-btn">Empezar de Nuevo</button>
+    </header>
+    <main id="app-container">
+        <!-- Step 1: Upload Model -->
+        <section id="step-1-model-upload" class="step active">
+            <h2>Paso 1: Sube tu Foto</h2>
+            <div class="step-content">
+                <div class="step-input">
+                    <p>Sube una foto clara de la persona.</p>
+                    <p class="instructions">Para mejores resultados, por favor sube una foto que muestre a la persona de las rodillas hacia arriba.</p>
+                    <input type="file" id="model-upload-input" accept="image/png, image/jpeg">
+                    <label for="model-upload-input" class="file-label">Elegir archivo...</label>
+                </div>
+                <div class="step-output">
+                    <img id="model-upload-preview" class="preview-image" alt="Model preview" style="display: none;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Clean Model -->
+        <section id="step-2-model-clean" class="step">
+            <h2>Paso 2: Quitar Accesorios</h2>
+            <div class="step-content">
+                <div class="step-input">
+                    <h3>Original</h3>
+                    <img id="model-clean-input-img" alt="Original model">
+                </div>
+                <div class="step-output">
+                    <h3>Resultado</h3>
+                    <div class="image-container">
+                        <img id="model-clean-output-img" alt="Cleaned model result" style="display: none;">
+                        <div class="loader" style="display: none;"></div>
+                        <p class="error-message"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="step-controls">
+                <button id="clean-model-btn" class="process-btn">Procesar</button>
+                <button id="retry-clean-model-btn" class="retry-btn">Reintentar</button>
+                <button id="download-clean-model-btn" class="download-btn" disabled>Descargar</button>
+                <button id="approve-clean-model-btn" class="approve-btn" disabled>Aprobar y Continuar</button>
+            </div>
+        </section>
+
+        <!-- Step 3: Upload Outfit -->
+        <section id="step-3-outfit-upload" class="step">
+            <h2>Paso 3: Sube la Foto del Atuendo</h2>
+             <div class="step-content">
+                <div class="step-input">
+                    <p>Sube una foto del atuendo.</p>
+                    <input type="file" id="outfit-upload-input" accept="image/png, image/jpeg">
+                    <label for="outfit-upload-input" class="file-label">Elegir archivo...</label>
+                </div>
+                <div class="step-output">
+                     <img id="outfit-upload-preview" class="preview-image" alt="Outfit preview" style="display: none;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Isolate Outfit -->
+        <section id="step-4-outfit-isolate" class="step">
+            <h2>Paso 4: Aislar Atuendo</h2>
+            <div class="step-content">
+                <div class="step-input">
+                    <h3>Original</h3>
+                    <img id="outfit-isolate-input-img" alt="Original outfit">
+                </div>
+                <div class="step-output">
+                    <h3>Resultado</h3>
+                    <div class="image-container">
+                        <img id="outfit-isolate-output-img" alt="Isolated outfit result" style="display: none;">
+                        <div class="loader" style="display: none;"></div>
+                        <p class="error-message"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="step-controls">
+                <button id="isolate-outfit-btn" class="process-btn">Procesar</button>
+                <button id="retry-isolate-outfit-btn" class="retry-btn">Reintentar</button>
+                <button id="download-isolate-outfit-btn" class="download-btn" disabled>Descargar</button>
+                <button id="approve-isolate-outfit-btn" class="approve-btn" disabled>Aprobar y Continuar</button>
+            </div>
+        </section>
+
+        <!-- Step 5: Combine -->
+        <section id="step-5-combine" class="step">
+            <h2>Paso 5: Prueba Virtual</h2>
+            <div class="step-content">
+                <div class="step-input combine-inputs">
+                    <div>
+                        <h3>Modelo</h3>
+                        <img id="combine-input-model-img" alt="Cleaned model for combination">
+                    </div>
+                    <div>
+                        <h3>Atuendo</h3>
+                        <img id="combine-input-outfit-img" alt="Isolated outfit for combination">
+                    </div>
+                </div>
+                <div class="step-output">
+                    <h3>Resultado Final</h3>
+                     <div class="image-container">
+                        <img id="combine-output-img" alt="Final combined result" style="display: none;">
+                        <div class="loader" style="display: none;"></div>
+                         <p class="error-message"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="step-controls">
+                 <button id="combine-btn" class="process-btn">Procesar</button>
+                <button id="retry-combine-btn" class="retry-btn">Reintentar</button>
+                <button id="download-combine-btn" class="download-btn" disabled>Descargar</button>
+                <button id="save-album-btn" class="approve-btn" disabled>Guardar en Álbum</button>
+                <button id="try-another-outfit-btn" class="process-btn">Probar Otro Atuendo</button>
+            </div>
+        </section>
+    </main>
+
+    <section id="album-section">
+        <h2>Mi Álbum</h2>
+        <div id="album-grid">
+            <p id="album-placeholder">Tus imágenes guardadas aparecerán aquí.</p>
+        </div>
+    </section>
+
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>
